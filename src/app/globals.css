@@ -1,26 +1,269 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 215 63% 7%;      /* #07111F */
+    --foreground: 210 40% 98%;     /* #F8FAFC */
+    --card: 216 48% 14%;          /* #121F34 */
+    --card-foreground: 210 40% 98%;
+    --popover: 215 63% 7%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 222 100% 68%;      /* #5D8BFF */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 216 41% 10%;     /* #0C1728 */
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;         /* #18263E */
+    --muted-foreground: 218 20% 73%; /* #AAB4C8 */
+    --accent: 187 92% 70%;        /* #6EE7F9 */
+    --accent-foreground: 215 63% 7%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 222 100% 68%;
+    --radius: 1rem;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #07111F;   /* Midnight Navy */
+  color: #F8FAFC;              /* Platinum text */
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(93, 139, 255, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(110, 231, 249, 0.05) 0px, transparent 50%);
+  background-attachment: fixed;
 }
+
+/* Lenis smooth scrolling configuration styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis-stopped {
+  overflow: hidden;
+}
+.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Glassmorphism luxury panel cards */
+.glass-panel {
+  background: rgba(18, 31, 52, 0.7); /* Surface Cards */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-nav {
+  background: rgba(7, 17, 31, 0.75); /* Primary Background */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.text-editorial {
+  font-family: var(--font-serif), Georgia, serif;
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #07111F;
+}
+::-webkit-scrollbar-thumb {
+  background: #18263E;
+  border-radius: 4px;
+  border: 2px solid #07111F;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5D8BFF;
+}
+
+/* Custom Premium Accent Gradients */
+.gradient-text {
+  background: linear-gradient(135deg, #5D8BFF 0%, #6EE7F9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #5D8BFF 0%, #6EE7F9 100%);
+}
+
+.gradient-hover:hover {
+  background: linear-gradient(135deg, #6EE7F9 0%, #5D8BFF 100%);
+}
+
+/* Fine noise texture overlay overlay */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  content: "";
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Custom Cursor styles */
+.custom-cursor {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(110, 231, 249, 0.8);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10000;
+  transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .custom-cursor {
+    display: block;
+  }
+}
+
+/* ═══════════════ Premium Project Section Styles ═══════════════════ */
+
+/* 3D perspective wrapper for project cards */
+.project-perspective {
+  perspective: 1500px;
+  transform-style: preserve-3d;
+}
+
+/* Project card depth hover */
+.project-card-depth {
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
+}
+.project-card-depth:hover {
+  transform: translateZ(24px);
+  box-shadow:
+    0 25px 60px -12px rgba(0, 0, 0, 0.5),
+    0 0 40px -8px rgba(93, 139, 255, 0.08);
+}
+
+/* Clip-path image reveal */
+@keyframes clipReveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+.clip-reveal {
+  animation: clipReveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+/* Mockup browser frame glow */
+.mockup-glow {
+  box-shadow:
+    0 20px 80px -20px rgba(93, 139, 255, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+/* Glass moving highlight */
+@keyframes glassHighlight {
+  0%   { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(200%) skewX(-15deg); }
+}
+.glass-highlight {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.03) 45%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0.03) 55%,
+    transparent 100%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.group:hover .glass-highlight {
+  opacity: 1;
+  animation: glassHighlight 1.5s ease-in-out;
+}
+
+/* Floating tech badge animation */
+@keyframes floatBadge {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33%      { transform: translateY(-4px) rotate(1deg); }
+  66%      { transform: translateY(2px) rotate(-1deg); }
+}
+.float-badge {
+  animation: floatBadge 4s ease-in-out infinite;
+}
+
+/* Button magnetic hover */
+.btn-magnetic {
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+}
+.btn-magnetic:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px -8px rgba(93, 139, 255, 0.3);
+}
+
+/* Animated border draw for GitHub button */
+@keyframes borderDraw {
+  from { background-size: 0% 1px, 1px 0%, 0% 1px, 1px 0%; }
+  to   { background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%; }
+}
+.border-draw-hover:hover {
+  background-image:
+    linear-gradient(90deg, rgba(93,139,255,0.4) 100%, transparent 0),
+    linear-gradient(0deg, rgba(93,139,255,0.4) 100%, transparent 0),
+    linear-gradient(90deg, rgba(93,139,255,0.4) 100%, transparent 0),
+    linear-gradient(0deg, rgba(93,139,255,0.4) 100%, transparent 0);
+  background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  animation: borderDraw 0.6s ease forwards;
+}
+
+/* Spotlight effect on demo button hover */
+.spotlight-btn {
+  position: relative;
+  overflow: hidden;
+}
+.spotlight-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(93,139,255,0.15), transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease, height 0.5s ease;
+}
+.spotlight-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .clip-reveal,
+  .glass-highlight,
+  .float-badge,
+  .btn-magnetic,
+  .border-draw-hover:hover,
+  .spotlight-btn::before {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
